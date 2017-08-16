@@ -18,18 +18,25 @@ function logSpecificFile(filename, cb) {
 }
 
 function logData(files, fetchFunction, cb) {
-  var loopCount = 0,
-    results = [];
-  files.forEach(function (item) {
-    fetchFunction(item, function (err,res) {
-      loopCount ++;
+  var  loopCount = 0;
+  var results = [];
+  function getResults(err,res){
+    if(err){
+      cb(err, res);
+    }
+    if(res){
       results.push(res);
-      if (loopCount === files.length) {
-        cb(results);
-      }
-    });
-    console.log('fetch ' + item);
-  });
+    }
+    loopCount++;
+    if (loopCount === files.length) {
+      cb(results);
+      return;
+    }
+    else {
+      fetchFunction(files[loopCount], getResults);
+    }
+  }
+  fetchFunction(files[0], getResults);
 }
 
 logData(files, delay, console.log);
