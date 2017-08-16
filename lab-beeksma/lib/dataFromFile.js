@@ -2,28 +2,22 @@
 
 const fs = require('fs');
 
-var files = ['one.txt', 'two.txt', 'three.txt'];
-
-
-function delay (filename, cb){
-  setTimeout( () => {
-    cb(null,filename);
-  },500 + Math.random()*1000);
-}
-
 function logSpecificFile(filename, cb) {
   fs.readFile(`${__dirname}/../assets/${filename}`, function (err, res) {
+    if(err){
+      cb(err,undefined);
+    }
     cb(err,res.slice(0,8).toString('hex'));
   });
 }
 
-exports.logData = function(files, fetchFunction, cb) {
+exports.logData = function(files, cb) {
   var  loopCount = 0;
   var results = [];
   function getResults(err,res){
     if(err){
       cb(err, res);
-      throw err;
+      return;
     }
     if(res){
       console.log(res);
@@ -35,10 +29,8 @@ exports.logData = function(files, fetchFunction, cb) {
       return;
     }
     else {
-      fetchFunction(files[loopCount], getResults);
+      logSpecificFile(files[loopCount], getResults);
     }
   }
-  fetchFunction(files[0], getResults);
+  logSpecificFile(files[0], getResults);
 }
-
-exports.logData(files, delay, console.log);

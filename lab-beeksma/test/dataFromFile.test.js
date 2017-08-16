@@ -25,6 +25,6 @@ describe('dataFromFile', function() {
   });
 });
 
-// one.txt 48 61 72 61 6c 64 20 53
-// two.txt 54 68 65 20 75 6e 61 6e
-// three.txt 49 27 6d 20 70 61 63 6b
+// one.txt 486172616c642053
+// two.txt 54686520756e616e
+// three.txt 49276d207061636b
