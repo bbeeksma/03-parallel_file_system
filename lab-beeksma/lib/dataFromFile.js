@@ -17,14 +17,16 @@ function logSpecificFile(filename, cb) {
   });
 }
 
-function logData(files, fetchFunction, cb) {
+exports.logData = function(files, fetchFunction, cb) {
   var  loopCount = 0;
   var results = [];
   function getResults(err,res){
     if(err){
       cb(err, res);
+      throw err;
     }
     if(res){
+      console.log(res);
       results.push(res);
     }
     loopCount++;
@@ -39,4 +41,4 @@ function logData(files, fetchFunction, cb) {
   fetchFunction(files[0], getResults);
 }
 
-logData(files, delay, console.log);
+exports.logData(files, delay, console.log);
