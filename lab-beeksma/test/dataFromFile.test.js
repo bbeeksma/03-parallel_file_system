@@ -10,20 +10,26 @@ describe('dataFromFile', function() {
         done();
       });
     });
-    it ('should return an array with the first 8 characters of each file in the argument array in correct order', function(done) {
+    it (`should return an array with the first 8 characters of each file in the argument array in correct order for ['one.txt','two.txt','three.txt']`, function(done) {
       fileTest.logData(['one.txt','two.txt','three.txt'], function (err, res) {
         assert.ifError(err);
-        assert.equal(res, ['48 61 72 61 6c 64 20 53','54 68 65 20 75 6e 61 6e','49 27 6d 20 70 61 63 6b']);
+        assert.deepEqual(res, [ '486172616c642053', '54686520756e616e', '49276d207061636b' ]);
         done();
       });
+    });
+    it (`should return an array with the first 8 characters of each file in the argument array in correct order for ['three.txt','two.txt','one.txt']`, function(done) {
       fileTest.logData(['three.txt','two.txt','one.txt'], function (err, res) {
         assert.ifError(err);
-        assert.equal(res, ['49 27 6d 20 70 61 63 6b','54 68 65 20 75 6e 61 6e','48 61 72 61 6c 64 20 53']);
+        assert.deepEqual(res, [ '49276d207061636b', '54686520756e616e', '486172616c642053' ]);
         done();
       });
     });
   });
 });
+
+
+
+
 
 // one.txt 486172616c642053
 // two.txt 54686520756e616e

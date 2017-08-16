@@ -25,7 +25,7 @@ exports.logData = function(files, cb) {
     }
     loopCount++;
     if (loopCount === files.length) {
-      cb(results);
+      cb(null, results);
       return;
     }
     else {
@@ -33,4 +33,4 @@ exports.logData = function(files, cb) {
     }
   }
   logSpecificFile(files[0], getResults);
-}
+};
